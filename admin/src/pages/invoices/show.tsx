@@ -1,11 +1,10 @@
 import React from "react";
-import { Show, DateField, NumberField, TextField } from "@refinedev/antd";
-import { Typography, Card, Table, Descriptions, Tag, Space, Button } from "antd";
+import { Show, DateField } from "@refinedev/antd";
+import { Typography, Card, Table, Tag, Space, Button, Divider } from "antd";
 import { useShow } from "@refinedev/core";
-import { FilePdfOutlined } from "@ant-design/icons";
+import { PrinterOutlined } from "@ant-design/icons";
 
-const { Title } = Typography;
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8001/api";
+const { Title, Text } = Typography;
 
 export const InvoiceShow: React.FC = () => {
   const { queryResult } = useShow({
@@ -17,111 +16,132 @@ export const InvoiceShow: React.FC = () => {
 
   const record = data?.data;
 
-  const downloadPdf = async () => {
-    if (record?.id) {
-      const token = localStorage.getItem("token");
-      try {
-        const response = await fetch(`${API_URL}/invoices/${record.id}/pdf`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        if (!response.ok) throw new Error("Network response was not ok");
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `invoice-${record.number}.pdf`;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-      } catch (error) {
-        console.error("Download failed:", error);
-      }
-    }
+  const handlePrint = () => {
+    window.print();
   };
+
+  if (isLoading) return <Show isLoading={true} />;
 
   return (
     <Show 
       isLoading={isLoading}
+      title={false}
       headerButtons={({ defaultButtons }) => (
         <>
           {defaultButtons}
           <Button 
-            icon={<FilePdfOutlined />} 
-            onClick={downloadPdf}
+            icon={<PrinterOutlined />} 
+            onClick={handlePrint}
             type="primary"
           >
-            Download PDF
+            Печать
           </Button>
         </>
       )}
     >
-      <Card title="Общая информация" style={{ marginBottom: 16 }}>
-        <Descriptions bordered column={2}>
-          <Descriptions.Item label="Номер">{record?.number}</Descriptions.Item>
-          <Descriptions.Item label="Дата">
-            {record?.date ? <DateField value={record?.date} format="DD.MM.YYYY" /> : "-"}
-          </Descriptions.Item>
-          <Descriptions.Item label="Срок оплаты">
-            {record?.due_date ? <DateField value={record?.due_date} format="DD.MM.YYYY" /> : "-"}
-          </Descriptions.Item>
-          <Descriptions.Item label="Тип">
-            <Tag color={record?.type === 'monthly' ? 'blue' : 'green'}>
-              {record?.type}
-            </Tag>
-          </Descriptions.Item>
-          <Descriptions.Item label="Статус">
-            <Tag color={record?.status === 'paid' ? 'green' : record?.status === 'partially' ? 'orange' : 'red'}>
-              {record?.status}
-            </Tag>
-          </Descriptions.Item>
-          <Descriptions.Item label="Валюта">{record?.currency}</Descriptions.Item>
-        </Descriptions>
-      </Card>
+      <div className="printable-content">
+        <div className="invoice-box">
+          <table cellPadding="0" cellSpacing="0">
+            <tr className="top">
+              <td colSpan={2}>
+                <table>
+                  <tr>
+                    <td className="title">
+                      <div className="invoice-header-title">INVOICE</div>
+                    </td>
+                    <td>
+                      <div className="invoice-label">Счет № {record?.number}</div>
+                      <Text type="secondary">
+                        <DateField value={record?.date} format="DD.MM.YYYY" />
+                      </Text>
+                      <br />
+                      {record?.due_date && (
+                        <>
+                          <Text type="secondary" italic>Оплатить до: </Text>
+                          <DateField value={record?.due_date} format="DD.MM.YYYY" />
+                        </>
+                      )}
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
 
-      <Space direction="horizontal" style={{ width: '100%', marginBottom: 16 }} size="large">
-        <Card title="Отправитель (Моя компания)" style={{ flex: 1 }}>
-          <Descriptions column={1}>
-            <Descriptions.Item label="Название">{record?.my_company?.name}</Descriptions.Item>
-            <Descriptions.Item label="IDNO">{record?.my_company?.idno}</Descriptions.Item>
-          </Descriptions>
-        </Card>
-        <Card title="Получатель (Клиент)" style={{ flex: 1 }}>
-          <Descriptions column={1}>
-            <Descriptions.Item label="Название">{record?.client?.name}</Descriptions.Item>
-            <Descriptions.Item label="IDNO">{record?.client?.idno}</Descriptions.Item>
-          </Descriptions>
-        </Card>
-      </Space>
+            <tr className="information">
+              <td colSpan={2}>
+                <table>
+                  <tr>
+                    <td>
+                      <div className="invoice-label">ОТПРАВИТЕЛЬ:</div>
+                      <strong>{record?.my_company?.name}</strong><br />
+                      IDNO: {record?.my_company?.idno}<br />
+                      {record?.my_company?.legal_address}
+                    </td>
+                    <td>
+                      <div className="invoice-label">ПОЛУЧАТЕЛЬ:</div>
+                      <strong>{record?.client?.name}</strong><br />
+                      IDNO: {record?.client?.idno}<br />
+                      {record?.client?.legal_address}
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
 
-      <Card title="Позиции в счете">
-        <Table
-          dataSource={record?.items || []}
-          pagination={false}
-          rowKey="id"
-        >
-          <Table.Column dataIndex="description" title="Описание" />
-          <Table.Column dataIndex="quantity" title="Кол-во" render={(v) => <NumberField value={v} />} />
-          <Table.Column dataIndex="unit" title="Ед. изм." />
-          <Table.Column dataIndex="price" title="Цена" render={(v) => <NumberField value={v} />} />
-          <Table.Column dataIndex="total" title="Итого" render={(v) => <NumberField value={v} />} />
-        </Table>
-        
-        <div style={{ marginTop: 20, textAlign: 'right' }}>
-          <Title level={4}>Итоговая сумма: {record?.total_amount} {record?.currency}</Title>
-          <Title level={5} type="secondary">Оплачено: {record?.paid_amount} {record?.currency}</Title>
-          <Title level={4} type={record?.total_amount - record?.paid_amount > 0 ? 'danger' : 'success'}>
-            Остаток: {record?.total_amount - record?.paid_amount} {record?.currency}
-          </Title>
+            <tr className="heading">
+              <td>Описание</td>
+              <td>Сумма</td>
+            </tr>
+
+            {record?.items?.map((item: any, index: number) => (
+              <tr className="item" key={item.id || index}>
+                <td>
+                  {item.description}
+                  <br />
+                  <Text type="secondary" style={{ fontSize: '12px' }}>
+                    {item.quantity} {item.unit} x {item.price} {record?.currency}
+                  </Text>
+                </td>
+                <td>{item.quantity * item.price} {record?.currency}</td>
+              </tr>
+            ))}
+
+            <tr className="total">
+              <td></td>
+              <td>
+                Итого: {record?.total_amount} {record?.currency}
+                <Divider style={{ margin: '12px 0' }} />
+                <div style={{ fontSize: '14px', fontWeight: 'normal' }}>
+                  <Text type="secondary">Оплачено: </Text>
+                  {record?.paid_amount} {record?.currency}
+                  <br />
+                  <Text type={record?.total_amount - record?.paid_amount > 0 ? 'danger' : 'success'}>
+                    Остаток: {record?.total_amount - record?.paid_amount} {record?.currency}
+                  </Text>
+                </div>
+              </td>
+            </tr>
+          </table>
+
+          {record?.notes && (
+            <div style={{ marginTop: '40px' }}>
+              <div className="invoice-label">Примечание:</div>
+              <div style={{ border: '1px solid #eee', padding: '10px', borderRadius: '4px' }}>
+                {record.notes}
+              </div>
+            </div>
+          )}
+
+          <div style={{ marginTop: '60px', display: 'flex', justifyContent: 'space-between' }}>
+            <div style={{ borderTop: '1px solid #333', width: '200px', textAlign: 'center', paddingTop: '5px' }}>
+              Подпись (Отправитель)
+            </div>
+            <div style={{ borderTop: '1px solid #333', width: '200px', textAlign: 'center', paddingTop: '5px' }}>
+              Подпись (Получатель)
+            </div>
+          </div>
         </div>
-      </Card>
-
-      {record?.notes && (
-        <Card title="Заметки" style={{ marginTop: 16 }}>
-          <TextField value={record?.notes} />
-        </Card>
-      )}
+      </div>
     </Show>
   );
 };

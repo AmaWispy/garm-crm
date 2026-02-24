@@ -12,7 +12,7 @@ class ActController extends Controller
     {
         $act->load(['client']);
         $pdf = Pdf::loadView('pdf.act', compact('act'));
-        return $pdf->download("act-{$act->number}.pdf");
+        return $pdf->stream("act-{$act->number}.pdf");
     }
 
     public function index()

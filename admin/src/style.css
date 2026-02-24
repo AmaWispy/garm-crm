@@ -16,27 +16,135 @@ body {
 }
 
 @media print {
-    /* Hide layout elements */
-    .ant-layout-sider,
-    .ant-layout-header,
-    .ant-breadcrumb,
+    /* Убираем поля самого браузера, чтобы они не добавляли свои отступы */
+    @page {
+        size: auto;
+        margin: 0mm !important;
+    }
+
+    /* Скрываем всё, что не относится к документу */
+    .ant-layout-sider, 
+    .ant-layout-header, 
+    .ant-btn, 
+    .refine-show-buttons,
+    .ant-page-header-heading, /* Скрывает заголовок "Show Invoice" */
     .ant-page-header-heading-extra,
-    .ant-btn {
+    .ant-breadcrumb,
+    .ant-card-head { /* Скрывает заголовки карточек Ant Design */
         display: none !important;
     }
 
-    /* Reset layout margins for print */
-    .ant-layout-content {
+    /* Сбрасываем все контейнеры Ant Design и Refine, чтобы они не занимали место */
+    body, html, #root, .ant-layout, .ant-layout-content, .refine-show-page, .ant-card, .ant-card-body {
         margin: 0 !important;
         padding: 0 !important;
+        background: #fff !important;
+        width: 100% !important;
+        height: auto !important;
+        display: block !important;
+        border: none !important; /* Убирает серые бордеры карточек */
+        box-shadow: none !important; /* Убирает тени */
     }
 
-    /* Make sure the show card takes full width */
-    .ant-card {
-        border: none !important;
+    /* Контейнер документа теперь занимает ровно всю ширину листа */
+    .printable-content {
+        display: block !important;
+        width: 100% !important;
+        padding: 15mm !important; /* Стандартные поля документа внутри листа */
+        box-sizing: border-box !important;
     }
 
-    .ant-card-body {
+    .invoice-box {
+        max-width: 100% !important;
+        width: 100% !important;
+        margin: 0 !important;
         padding: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
     }
+
+    /* Гарантируем, что таблицы внутри растягиваются на всю ширину */
+    .invoice-box table {
+        width: 100% !important;
+    }
+}
+
+/* Professional Invoice Styling */
+.invoice-box {
+    max-width: 800px;
+    margin: auto;
+    padding: 30px;
+    border: 1px solid #eee;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    font-size: 14px;
+    line-height: 24px;
+    font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+    color: #555;
+    background: #fff;
+}
+
+.invoice-box table {
+    width: 100%;
+    line-height: inherit;
+    text-align: left;
+}
+
+.invoice-box table td {
+    padding: 5px;
+    vertical-align: top;
+}
+
+.invoice-box table tr td:nth-child(2) {
+    text-align: right;
+}
+
+.invoice-box table tr.top table td {
+    padding-bottom: 20px;
+}
+
+.invoice-box table tr.top table td.title {
+    font-size: 45px;
+    line-height: 45px;
+    color: #333;
+}
+
+.invoice-box table tr.information table td {
+    padding-bottom: 40px;
+}
+
+.invoice-box table tr.heading td {
+    background: #eee;
+    border-bottom: 1px solid #ddd;
+    font-weight: bold;
+}
+
+.invoice-box table tr.details td {
+    padding-bottom: 20px;
+}
+
+.invoice-box table tr.item td {
+    border-bottom: 1px solid #eee;
+}
+
+.invoice-box table tr.item.last td {
+    border-bottom: none;
+}
+
+.invoice-box table tr.total td:nth-child(2) {
+    border-top: 2px solid #eee;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.invoice-header-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #1890ff;
+    text-transform: uppercase;
+}
+
+.invoice-label {
+    font-weight: bold;
+    color: #333;
+    margin-right: 8px;
 }

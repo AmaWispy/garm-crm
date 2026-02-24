@@ -17,7 +17,7 @@ export const InvoiceList: React.FC = () => {
     syncWithLocation: true,
   });
 
-  const downloadPdf = async (id: string) => {
+  const showPdf = async (id: string) => {
     const token = localStorage.getItem("token");
     try {
       const response = await fetch(`${API_URL}/invoices/${id}/pdf`, {
@@ -28,14 +28,9 @@ export const InvoiceList: React.FC = () => {
       if (!response.ok) throw new Error("Network response was not ok");
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `invoice-${id}.pdf`;
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
+      window.open(url, "_blank");
     } catch (error) {
-      console.error("Download failed:", error);
+      console.error("View failed:", error);
     }
   };
 
@@ -61,7 +56,7 @@ export const InvoiceList: React.FC = () => {
               <Button
                 icon={<FilePdfOutlined />}
                 size="small"
-                onClick={() => downloadPdf(record.id)}
+                onClick={() => showPdf(record.id)}
               />
               <EditButton hideText size="small" recordItemId={record.id} />
               <ShowButton hideText size="small" recordItemId={record.id} />

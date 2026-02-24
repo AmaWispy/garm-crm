@@ -12,7 +12,7 @@ class InvoiceController extends Controller
     {
         $invoice->load(['client', 'myCompany', 'items']);
         $pdf = Pdf::loadView('pdf.invoice', compact('invoice'));
-        return $pdf->download("invoice-{$invoice->number}.pdf");
+        return $pdf->stream("invoice-{$invoice->number}.pdf");
     }
 
     public function index()

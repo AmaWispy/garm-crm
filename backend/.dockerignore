@@ -1,0 +1,7 @@
+vendor
+storage/*.key
+.git
+.env
+Dockerfile
+# Exclude symlink - Docker on Windows cannot pack it (unknown file mode)
+public/storage

@@ -1,0 +1,30 @@
+{
+  "documentTitle": {
+    "default": "Garm CRM",
+    "suffix": " | Garm CRM"
+  },
+  "notifications": {
+    "editSuccess": "Saved successfully",
+    "createSuccess": "Created successfully",
+    "deleteSuccess": "Deleted successfully"
+  },
+  "users": {
+    "users": "Users",
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "password_confirmation": "Confirm password",
+      "role": "Role"
+    },
+    "roles": {
+      "admin": "Admin",
+      "accountant": "Accountant"
+    },
+    "password_mismatch": "Passwords do not match",
+    "password_leave_blank": "Leave blank to keep current password"
+  },
+  "buttons": {
+    "actions": "Actions"
+  }
+}

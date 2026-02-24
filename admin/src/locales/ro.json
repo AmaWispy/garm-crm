@@ -1,0 +1,30 @@
+{
+  "documentTitle": {
+    "default": "Garm CRM",
+    "suffix": " | Garm CRM"
+  },
+  "notifications": {
+    "editSuccess": "Salvat cu succes",
+    "createSuccess": "Creat cu succes",
+    "deleteSuccess": "Șters cu succes"
+  },
+  "users": {
+    "users": "Utilizatori",
+    "fields": {
+      "name": "Nume",
+      "email": "Email",
+      "password": "Parolă",
+      "password_confirmation": "Confirmă parola",
+      "role": "Rol"
+    },
+    "roles": {
+      "admin": "Admin",
+      "accountant": "Contabil"
+    },
+    "password_mismatch": "Parolele nu se potrivesc",
+    "password_leave_blank": "Lăsați gol pentru a păstra parola curentă"
+  },
+  "buttons": {
+    "actions": "Acțiuni"
+  }
+}

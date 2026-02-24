@@ -7,32 +7,12 @@ import {
   DeleteButton,
   DateField,
 } from "@refinedev/antd";
-import { Table, Space, Button } from "antd";
-import { FilePdfOutlined } from "@ant-design/icons";
-
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8001/api";
+import { Table, Space } from "antd";
 
 export const ActList: React.FC = () => {
   const { tableProps } = useTable({
     syncWithLocation: true,
   });
-
-  const showPdf = async (id: string) => {
-    const token = localStorage.getItem("token");
-    try {
-      const response = await fetch(`${API_URL}/acts/${id}/pdf`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (!response.ok) throw new Error("Network response was not ok");
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      window.open(url, "_blank");
-    } catch (error) {
-      console.error("View failed:", error);
-    }
-  };
 
   return (
     <List>
@@ -50,11 +30,6 @@ export const ActList: React.FC = () => {
           dataIndex="actions"
           render={(_, record: any) => (
             <Space>
-              <Button
-                icon={<FilePdfOutlined />}
-                size="small"
-                onClick={() => showPdf(record.id)}
-              />
               <EditButton hideText size="small" recordItemId={record.id} />
               <ShowButton hideText size="small" recordItemId={record.id} />
               <DeleteButton hideText size="small" recordItemId={record.id} />

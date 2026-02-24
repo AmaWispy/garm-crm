@@ -1,6 +1,6 @@
 import { AuthProvider } from "@refinedev/core";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8001/api";
 
 let identityCache: { id: number; name: string; email: string; role?: string } | null = null;
 let identityPromise: Promise<typeof identityCache> | null = null;

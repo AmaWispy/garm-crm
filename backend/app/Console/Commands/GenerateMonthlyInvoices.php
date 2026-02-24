@@ -47,6 +47,7 @@ class GenerateMonthlyInvoices extends Command
             if ($lastInvoice) {
                 $newInvoice = Invoice::create([
                     'client_id' => $client->id,
+                    'my_company_id' => $lastInvoice->my_company_id,
                     'number' => 'INV-' . $today->format('Ym') . '-' . str_pad($client->id, 4, '0', STR_PAD_LEFT),
                     'date' => $today->format('Y-m-d'),
                     'due_date' => $today->copy()->addDays(14)->format('Y-m-d'),

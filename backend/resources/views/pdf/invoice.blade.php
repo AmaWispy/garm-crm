@@ -22,11 +22,18 @@
     <div class="invoice-box">
         <table class="header">
             <tr>
-                <td class="logo">GARM CRM</td>
+                <td class="logo">{{ $invoice->myCompany->name }}</td>
                 <td class="company-info">
-                    <strong>Garm CRM Solutions</strong><br>
-                    Chisinau, Moldova<br>
-                    Email: contact@garm-crm.com
+                    <strong>{{ $invoice->myCompany->name }}</strong><br>
+                    {{ $invoice->myCompany->legal_address }}<br>
+                    IDNO: {{ $invoice->myCompany->idno }}<br>
+                    VAT: {{ $invoice->myCompany->vat_code }}<br>
+                    @php $bank = $invoice->myCompany->bankAccounts->first(); @endphp
+                    @if($bank)
+                        Bank: {{ $bank->bank_name }}<br>
+                        IBAN: {{ $bank->iban }}<br>
+                        SWIFT: {{ $bank->swift_bic }}
+                    @endif
                 </td>
             </tr>
         </table>
@@ -38,8 +45,9 @@
                 <td>
                     <strong>Bill To:</strong><br>
                     {{ $invoice->client->name }}<br>
-                    {{ $invoice->client->address }}<br>
-                    Fiscal Code: {{ $invoice->client->fiscal_code }}
+                    {{ $invoice->client->legal_address }}<br>
+                    IDNO: {{ $invoice->client->idno }}<br>
+                    VAT: {{ $invoice->client->vat_code }}
                 </td>
                 <td style="text-align: right;">
                     <strong>Invoice #:</strong> {{ $invoice->number }}<br>

@@ -1,9 +1,9 @@
 import React from "react";
 import { Edit, useForm } from "@refinedev/antd";
-import { Form, Input, Card, Space, Button, Typography, Select } from "antd";
+import { Form, Input, Card, Space, Button, Select, Typography } from "antd";
 import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
 
-export const ClientEdit: React.FC = () => {
+export const MyCompanyEdit: React.FC = () => {
   const { formProps, saveButtonProps, queryResult } = useForm({
     meta: {
       populate: ["bankAccounts", "contacts"],
@@ -18,7 +18,7 @@ export const ClientEdit: React.FC = () => {
   }, [queryResult?.data?.data, formProps.form]);
 
   return (
-    <Edit saveButtonProps={saveButtonProps}>
+    <Edit saveButtonProps={saveButtonProps} title="Редактировать мою компанию">
       <Form {...formProps} layout="vertical">
         <Card title="Основная информация" size="small" style={{ marginBottom: 16 }}>
           <Form.Item

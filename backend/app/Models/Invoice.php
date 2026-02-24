@@ -11,6 +11,7 @@ class Invoice extends Model
 
     protected $fillable = [
         'client_id',
+        'my_company_id',
         'number',
         'date',
         'due_date',
@@ -23,8 +24,8 @@ class Invoice extends Model
     ];
 
     protected $casts = [
-        'date' => 'date:Y-m-d',
-        'due_date' => 'date:Y-m-d',
+        'date' => 'date',
+        'due_date' => 'date',
         'total_amount' => 'decimal:2',
         'paid_amount' => 'decimal:2',
     ];
@@ -32,6 +33,11 @@ class Invoice extends Model
     public function client()
     {
         return $this->belongsTo(Client::class);
+    }
+
+    public function myCompany()
+    {
+        return $this->belongsTo(MyCompany::class);
     }
 
     public function items()

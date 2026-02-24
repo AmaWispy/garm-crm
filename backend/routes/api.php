@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\MyCompanyController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ActController;
 use App\Http\Controllers\AuthController;
@@ -8,7 +9,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [AuthController::class, 'me']);
@@ -24,6 +25,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::apiResource('clients', ClientController::class);
+    Route::apiResource('my-companies', MyCompanyController::class);
     Route::get('invoices/{invoice}/pdf', [InvoiceController::class, 'generatePdf']);
     Route::apiResource('invoices', InvoiceController::class);
     Route::get('acts/{act}/pdf', [ActController::class, 'generatePdf']);

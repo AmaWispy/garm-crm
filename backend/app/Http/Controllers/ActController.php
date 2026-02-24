@@ -22,6 +22,12 @@ class ActController extends Controller
 
     public function store(Request $request)
     {
+        $data = $request->all();
+        if (isset($data['date'])) {
+            $data['date'] = \Carbon\Carbon::parse($data['date'])->format('Y-m-d');
+        }
+        $request->merge($data);
+
         $validated = $request->validate([
             'client_id' => 'required|exists:clients,id',
             'invoice_id' => 'nullable|exists:invoices,id',
@@ -36,6 +42,27 @@ class ActController extends Controller
 
     public function show(Act $act)
     {
+        return $act->load(['client', 'invoice']);
+    }
+
+    public function update(Request $request, Act $act)
+    {
+        $data = $request->all();
+        if (isset($data['date'])) {
+            $data['date'] = \Carbon\Carbon::parse($data['date'])->format('Y-m-d');
+        }
+        $request->merge($data);
+
+        $validated = $request->validate([
+            'client_id' => 'sometimes|exists:clients,id',
+            'invoice_id' => 'nullable|exists:invoices,id',
+            'number' => 'sometimes|string|unique:acts,number,' . $act->id,
+            'date' => 'sometimes|date',
+            'details' => 'nullable|string',
+            'amount' => 'sometimes|numeric',
+        ]);
+
+        $act->update($validated);
         return $act->load(['client', 'invoice']);
     }
 

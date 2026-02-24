@@ -19,7 +19,7 @@ class Act extends Model
     ];
 
     protected $casts = [
-        'date' => 'date:Y-m-d',
+        'date' => 'date',
         'amount' => 'decimal:2',
     ];
 

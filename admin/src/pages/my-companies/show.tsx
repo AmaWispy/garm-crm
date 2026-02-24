@@ -1,11 +1,9 @@
 import React from "react";
-import { Show, TextField, EmailField, TagField } from "@refinedev/antd";
+import { Show } from "@refinedev/antd";
 import { Typography, Card, Table, Descriptions } from "antd";
 import { useShow } from "@refinedev/core";
 
-const { Title } = Typography;
-
-export const ClientShow: React.FC = () => {
+export const MyCompanyShow: React.FC = () => {
   const { queryResult } = useShow({
     meta: {
       populate: ["bankAccounts", "contacts"],

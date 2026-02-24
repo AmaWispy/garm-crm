@@ -1,24 +1,13 @@
 import React from "react";
-import { Edit, useForm } from "@refinedev/antd";
-import { Form, Input, Card, Space, Button, Typography, Select } from "antd";
+import { Create, useForm } from "@refinedev/antd";
+import { Form, Input, Card, Space, Button, Select, Typography } from "antd";
 import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
 
-export const ClientEdit: React.FC = () => {
-  const { formProps, saveButtonProps, queryResult } = useForm({
-    meta: {
-      populate: ["bankAccounts", "contacts"],
-    },
-  });
-
-  React.useEffect(() => {
-    const data = queryResult?.data?.data;
-    if (data) {
-      formProps.form?.setFieldsValue(data);
-    }
-  }, [queryResult?.data?.data, formProps.form]);
+export const MyCompanyCreate: React.FC = () => {
+  const { formProps, saveButtonProps } = useForm();
 
   return (
-    <Edit saveButtonProps={saveButtonProps}>
+    <Create saveButtonProps={saveButtonProps} title="Добавить мою компанию">
       <Form {...formProps} layout="vertical">
         <Card title="Основная информация" size="small" style={{ marginBottom: 16 }}>
           <Form.Item
@@ -39,7 +28,7 @@ export const ClientEdit: React.FC = () => {
           <Form.Item label="Администратор" name="director_name">
             <Input />
           </Form.Item>
-          <Form.Item label="Страна" name="country">
+          <Form.Item label="Страна" name="country" initialValue="Moldova">
             <Select
               options={[
                 { label: "Молдова", value: "Moldova" },
@@ -164,6 +153,6 @@ export const ClientEdit: React.FC = () => {
           </Form.List>
         </Card>
       </Form>
-    </Edit>
+    </Create>
   );
 };

@@ -10,26 +10,45 @@ import {
 import { Table, Space, Button } from "antd";
 import { FilePdfOutlined } from "@ant-design/icons";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8001/api";
 
 export const InvoiceList: React.FC = () => {
   const { tableProps } = useTable({
     syncWithLocation: true,
   });
 
-  const downloadPdf = (id: string) => {
-    window.open(`${API_URL}/invoices/${id}/pdf`, "_blank");
+  const downloadPdf = async (id: string) => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await fetch(`${API_URL}/invoices/${id}/pdf`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!response.ok) throw new Error("Network response was not ok");
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `invoice-${id}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Download failed:", error);
+    }
   };
 
   return (
     <List>
       <Table {...tableProps} rowKey="id">
         <Table.Column dataIndex="number" title="Number" />
-        <Table.Column dataIndex={["client", "name"]} title="Client" />
+        <Table.Column dataIndex={["my_company", "name"]} title="From" />
+        <Table.Column dataIndex={["client", "name"]} title="To" />
         <Table.Column
           dataIndex="date"
           title="Date"
-          render={(value) => <DateField value={value} format="DD.MM.YYYY" />}
+          render={(value) => value ? <DateField value={value} format="DD.MM.YYYY" /> : "-"}
         />
         <Table.Column dataIndex="total_amount" title="Total" />
         <Table.Column dataIndex="status" title="Status" />

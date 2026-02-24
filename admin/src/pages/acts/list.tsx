@@ -2,21 +2,41 @@ import React from "react";
 import {
   List,
   useTable,
+  EditButton,
+  ShowButton,
   DeleteButton,
   DateField,
 } from "@refinedev/antd";
 import { Table, Space, Button } from "antd";
 import { FilePdfOutlined } from "@ant-design/icons";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8001/api";
 
 export const ActList: React.FC = () => {
   const { tableProps } = useTable({
     syncWithLocation: true,
   });
 
-  const downloadPdf = (id: string) => {
-    window.open(`${API_URL}/acts/${id}/pdf`, "_blank");
+  const downloadPdf = async (id: string) => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await fetch(`${API_URL}/acts/${id}/pdf`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!response.ok) throw new Error("Network response was not ok");
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `act-${id}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Download failed:", error);
+    }
   };
 
   return (
@@ -27,7 +47,7 @@ export const ActList: React.FC = () => {
         <Table.Column
           dataIndex="date"
           title="Date"
-          render={(value) => <DateField value={value} format="DD.MM.YYYY" />}
+          render={(value) => value ? <DateField value={value} format="DD.MM.YYYY" /> : "-"}
         />
         <Table.Column dataIndex="amount" title="Amount" />
         <Table.Column
@@ -40,6 +60,8 @@ export const ActList: React.FC = () => {
                 size="small"
                 onClick={() => downloadPdf(record.id)}
               />
+              <EditButton hideText size="small" recordItemId={record.id} />
+              <ShowButton hideText size="small" recordItemId={record.id} />
               <DeleteButton hideText size="small" recordItemId={record.id} />
             </Space>
           )}

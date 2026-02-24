@@ -34,18 +34,25 @@ import { ClientCreate } from "./pages/clients/create";
 import { ClientEdit } from "./pages/clients/edit";
 import { ClientShow } from "./pages/clients/show";
 
+import { MyCompanyList } from "./pages/my-companies/list";
+import { MyCompanyCreate } from "./pages/my-companies/create";
+import { MyCompanyEdit } from "./pages/my-companies/edit";
+import { MyCompanyShow } from "./pages/my-companies/show";
+
 import { InvoiceList } from "./pages/invoices/list";
 import { InvoiceCreate } from "./pages/invoices/create";
+import { InvoiceShow } from "./pages/invoices/show";
 
 import { ActList } from "./pages/acts/list";
 import { ActCreate } from "./pages/acts/create";
+import { ActShow } from "./pages/acts/show";
 
 import { UserList } from "./pages/users/list";
 import { UserCreate } from "./pages/users/create";
 import { UserEdit } from "./pages/users/edit";
-import { FileTextOutlined, SolutionOutlined } from "@ant-design/icons";
+import { FileTextOutlined, SolutionOutlined, BankOutlined } from "@ant-design/icons";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8001/api";
 
 const axiosInstance = axios.create();
 
@@ -106,10 +113,23 @@ const App: React.FC = () => {
                 },
               },
               {
+                name: "my-companies",
+                list: "/my-companies",
+                create: "/my-companies/create",
+                edit: "/my-companies/edit/:id",
+                show: "/my-companies/show/:id",
+                meta: {
+                  canDelete: true,
+                  icon: <BankOutlined />,
+                  label: "My Companies",
+                },
+              },
+              {
                 name: "invoices",
                 list: "/invoices",
                 create: "/invoices/create",
                 edit: "/invoices/edit/:id",
+                show: "/invoices/show/:id",
                 meta: {
                   canDelete: true,
                   icon: <FileTextOutlined />,
@@ -120,6 +140,8 @@ const App: React.FC = () => {
                 name: "acts",
                 list: "/acts",
                 create: "/acts/create",
+                edit: "/acts/edit/:id",
+                show: "/acts/show/:id",
                 meta: {
                   canDelete: true,
                   icon: <SolutionOutlined />,
@@ -181,13 +203,23 @@ const App: React.FC = () => {
                   <Route path="edit/:id" element={<ClientEdit />} />
                   <Route path="show/:id" element={<ClientShow />} />
                 </Route>
+                <Route path="/my-companies">
+                  <Route index element={<MyCompanyList />} />
+                  <Route path="create" element={<MyCompanyCreate />} />
+                  <Route path="edit/:id" element={<MyCompanyEdit />} />
+                  <Route path="show/:id" element={<MyCompanyShow />} />
+                </Route>
                 <Route path="/invoices">
                   <Route index element={<InvoiceList />} />
                   <Route path="create" element={<InvoiceCreate />} />
+                  <Route path="edit/:id" element={<InvoiceCreate />} />
+                  <Route path="show/:id" element={<InvoiceShow />} />
                 </Route>
                 <Route path="/acts">
                   <Route index element={<ActList />} />
                   <Route path="create" element={<ActCreate />} />
+                  <Route path="edit/:id" element={<ActCreate />} />
+                  <Route path="show/:id" element={<ActShow />} />
                 </Route>
                 <Route path="/users" element={<AdminOnly><Outlet /></AdminOnly>}>
                   <Route index element={<UserList />} />

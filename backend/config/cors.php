@@ -22,6 +22,7 @@ return [
     'allowed_origins' => [
         'https://garm-crm.garm.run',
         'http://localhost:3000',
+        'http://localhost:3001',
     ],
 
     'allowed_origins_patterns' => [],

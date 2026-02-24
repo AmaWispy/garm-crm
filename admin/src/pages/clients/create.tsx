@@ -30,6 +30,14 @@ export const ClientCreate: React.FC = () => {
           <Form.Item label="Администратор" name="director_name">
             <Input />
           </Form.Item>
+          <Form.Item label="Страна" name="country" initialValue="Moldova">
+            <Select
+              options={[
+                { label: "Молдова", value: "Moldova" },
+                { label: "Другая", value: "Other" },
+              ]}
+            />
+          </Form.Item>
           <Form.Item label="Юридический адрес" name="legal_address">
             <Input.TextArea rows={2} />
           </Form.Item>

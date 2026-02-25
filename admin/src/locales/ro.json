@@ -6,7 +6,8 @@
   "notifications": {
     "editSuccess": "Salvat cu succes",
     "createSuccess": "Creat cu succes",
-    "deleteSuccess": "Șters cu succes"
+    "deleteSuccess": "Șters cu succes",
+    "required": "Acest câmp este obligatoriu"
   },
   "users": {
     "users": "Utilizatori",
@@ -23,6 +24,108 @@
     },
     "password_mismatch": "Parolele nu se potrivesc",
     "password_leave_blank": "Lăsați gol pentru a păstra parola curentă"
+  },
+  "clients": {
+    "clients": "Clienți",
+    "fields": {
+      "name": "Denumirea companiei",
+      "idno": "IDNO (13 cifre)",
+      "vat_code": "Cod TVA",
+      "director_name": "Administrator",
+      "country": "Țara",
+      "legal_address": "Adresa juridică",
+      "physical_address": "Adresa fizică",
+      "notes": "Note",
+      "basic_info": "Informații de bază",
+      "bank_accounts": "Conturi Bancare",
+      "contacts": "Persoane de contact"
+    }
+  },
+  "myCompanies": {
+    "myCompanies": "Companiile Mele",
+    "title": {
+      "list": "Companiile mele",
+      "create": "Adaugă compania mea",
+      "edit": "Editează compania mea"
+    }
+  },
+  "invoices": {
+    "invoices": "Facturi",
+    "fields": {
+      "number": "Numărul facturii",
+      "date": "Data",
+      "due_date": "Data scadenței",
+      "type": "Tip",
+      "status": "Statut",
+      "currency": "Valuta",
+      "total_amount": "Suma totală",
+      "paid_amount": "Suma plătită",
+      "balance": "Balanță",
+      "notes": "Note",
+      "emitter": "Compania emitentă",
+      "client": "Client",
+      "items": "Produse / Servicii"
+    },
+    "labels": {
+      "sender": "EXPEDITOR",
+      "receiver": "DESTINATAR",
+      "description": "Descriere",
+      "amount": "Suma",
+      "quantity": "Cantitate",
+      "unit": "Unitate",
+      "price": "Preț",
+      "total": "Total",
+      "paid": "Plătit",
+      "balance": "Balanță",
+      "signature_sender": "Semnătura (Expeditor)",
+      "signature_receiver": "Semnătura (Destinatar)",
+      "note": "Notă"
+    }
+  },
+  "acts": {
+    "acts": "Acte",
+    "labels": {
+      "act_number": "Act de lucrări efectuate №",
+      "to_invoice": "La factura №",
+      "executor": "EXECUTANT",
+      "customer": "BENEFICIAR",
+      "description_works": "Descrierea lucrărilor",
+      "amount": "Suma",
+      "total_to_pay": "Total de plată",
+      "statement_placeholder": "Executarea lucrărilor conform contractului",
+      "statement": "Serviciile de mai sus au fost prestate în totalitate și la timp. Beneficiarul nu are nicio pretenție cu privire la volumul, calitatea și termenele serviciilor prestate.",
+      "executor_sign": "Executant",
+      "customer_sign": "Beneficiar"
+    }
+  },
+  "common": {
+    "fields": {
+      "bank_name": "Denumirea băncii",
+      "iban": "IBAN",
+      "swift_bic": "SWIFT/BIC",
+      "bank_code": "Codul băncii",
+      "position": "Funcția",
+      "first_name": "Prenume",
+      "last_name": "Nume",
+      "full_name": "Nume complet",
+      "phone": "Telefon",
+      "email": "Email"
+    },
+    "buttons": {
+      "add": "Adaugă",
+      "edit": "Editează",
+      "show": "Afișează",
+      "delete": "Șterge",
+      "save": "Salvează",
+      "cancel": "Anulează",
+      "print": "Imprimă",
+      "add_bank_account": "Adaugă cont bancar",
+      "add_contact": "Adaugă persoană de contact"
+    },
+    "countries": {
+      "Moldova": "Moldova",
+      "Other": "Alta"
+    }
   },
   "buttons": {
     "actions": "Acțiuni"

@@ -109,7 +109,7 @@ const App: React.FC = () => {
                 meta: {
                   canDelete: true,
                   icon: <TeamOutlined />,
-                  label: "Clients",
+                  label: t("clients.clients"),
                 },
               },
               {
@@ -121,7 +121,7 @@ const App: React.FC = () => {
                 meta: {
                   canDelete: true,
                   icon: <BankOutlined />,
-                  label: "My Companies",
+                  label: t("myCompanies.myCompanies"),
                 },
               },
               {
@@ -133,7 +133,7 @@ const App: React.FC = () => {
                 meta: {
                   canDelete: true,
                   icon: <FileTextOutlined />,
-                  label: "Invoices",
+                  label: t("invoices.invoices"),
                 },
               },
               {
@@ -145,7 +145,7 @@ const App: React.FC = () => {
                 meta: {
                   canDelete: true,
                   icon: <SolutionOutlined />,
-                  label: "Acts",
+                  label: t("acts.acts"),
                 },
               },
               {
@@ -156,7 +156,7 @@ const App: React.FC = () => {
                 meta: {
                   canDelete: true,
                   icon: <UserOutlined />,
-                  label: "Users",
+                  label: t("users.users"),
                 },
               },
             ]}

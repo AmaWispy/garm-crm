@@ -10,14 +10,14 @@ class ActController extends Controller
 {
     public function generatePdf(Act $act)
     {
-        $act->load(['client']);
+        $act->load(['client', 'myCompany']);
         $pdf = Pdf::loadView('pdf.act', compact('act'));
         return $pdf->stream("act-{$act->number}.pdf");
     }
 
     public function index()
     {
-        return Act::with(['client', 'invoice'])->latest()->get();
+        return Act::with(['client', 'invoice', 'myCompany'])->latest()->get();
     }
 
     public function store(Request $request)
@@ -30,6 +30,7 @@ class ActController extends Controller
 
         $validated = $request->validate([
             'client_id' => 'required|exists:clients,id',
+            'my_company_id' => 'required|exists:my_companies,id',
             'invoice_id' => 'nullable|exists:invoices,id',
             'number' => 'required|string|unique:acts',
             'date' => 'required|date',
@@ -42,7 +43,7 @@ class ActController extends Controller
 
     public function show(Act $act)
     {
-        return $act->load(['client', 'invoice']);
+        return $act->load(['client', 'invoice', 'myCompany']);
     }
 
     public function update(Request $request, Act $act)
@@ -55,6 +56,7 @@ class ActController extends Controller
 
         $validated = $request->validate([
             'client_id' => 'sometimes|exists:clients,id',
+            'my_company_id' => 'sometimes|exists:my_companies,id',
             'invoice_id' => 'nullable|exists:invoices,id',
             'number' => 'sometimes|string|unique:acts,number,' . $act->id,
             'date' => 'sometimes|date',
@@ -63,7 +65,7 @@ class ActController extends Controller
         ]);
 
         $act->update($validated);
-        return $act->load(['client', 'invoice']);
+        return $act->load(['client', 'invoice', 'myCompany']);
     }
 
     public function destroy(Act $act)

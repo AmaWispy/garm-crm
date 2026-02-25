@@ -1,55 +1,55 @@
 import React from "react";
 import { Create, useForm } from "@refinedev/antd";
-import { Form, Input, Card, Space, Button, Divider, Typography, Select } from "antd";
+import { Form, Input, Card, Space, Button, Select } from "antd";
 import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
-
-const { Title, Text } = Typography;
+import { useTranslation } from "react-i18next";
 
 export const ClientCreate: React.FC = () => {
+  const { t } = useTranslation();
   const { formProps, saveButtonProps } = useForm();
 
   return (
     <Create saveButtonProps={saveButtonProps}>
       <Form {...formProps} layout="vertical">
-        <Card title="Основная информация" size="small" style={{ marginBottom: 16 }}>
+        <Card title={t("clients.fields.basic_info")} size="small" style={{ marginBottom: 16 }}>
           <Form.Item
-            label="Наименование"
+            label={t("clients.fields.name")}
             name="name"
             rules={[{ required: true }]}
           >
             <Input />
           </Form.Item>
           <Space size="large" style={{ display: "flex" }}>
-            <Form.Item label="IDNO (13 цифр)" name="idno" rules={[{ max: 13 }]}>
+            <Form.Item label={t("clients.fields.idno")} name="idno" rules={[{ max: 13 }]}>
               <Input />
             </Form.Item>
-            <Form.Item label="НДС" name="vat_code">
+            <Form.Item label={t("clients.fields.vat_code")} name="vat_code">
               <Input />
             </Form.Item>
           </Space>
-          <Form.Item label="Администратор" name="director_name">
+          <Form.Item label={t("clients.fields.director_name")} name="director_name">
             <Input />
           </Form.Item>
-          <Form.Item label="Страна" name="country" initialValue="Moldova">
+          <Form.Item label={t("clients.fields.country")} name="country" initialValue="Moldova">
             <Select
               options={[
-                { label: "Молдова", value: "Moldova" },
-                { label: "Другая", value: "Other" },
+                { label: t("common.countries.Moldova"), value: "Moldova" },
+                { label: t("common.countries.Other"), value: "Other" },
               ]}
             />
           </Form.Item>
-          <Form.Item label="Юридический адрес" name="legal_address">
+          <Form.Item label={t("clients.fields.legal_address")} name="legal_address">
             <Input.TextArea rows={2} />
           </Form.Item>
-          <Form.Item label="Физический адрес" name="physical_address">
+          <Form.Item label={t("clients.fields.physical_address")} name="physical_address">
             <Input.TextArea rows={2} />
           </Form.Item>
-          <Form.Item label="Заметки" name="notes">
+          <Form.Item label={t("clients.fields.notes")} name="notes">
             <Input.TextArea />
           </Form.Item>
         </Card>
 
-        <Card title="Банковские реквизиты" size="small" style={{ marginBottom: 16 }}>
+        <Card title={t("clients.fields.bank_accounts")} size="small" style={{ marginBottom: 16 }}>
           <Form.List name="bank_accounts">
             {(fields, { add, remove }) => (
               <>
@@ -60,7 +60,7 @@ export const ClientCreate: React.FC = () => {
                     </Space>
                     <Form.Item
                       {...restField}
-                      label="Название банка"
+                      label={t("common.fields.bank_name")}
                       name={[name, "bank_name"]}
                     >
                       <Input />
@@ -68,21 +68,21 @@ export const ClientCreate: React.FC = () => {
                     <Space wrap>
                       <Form.Item
                         {...restField}
-                        label="IBAN"
+                        label={t("common.fields.iban")}
                         name={[name, "iban"]}
                       >
                         <Input />
                       </Form.Item>
                       <Form.Item
                         {...restField}
-                        label="SWIFT/BIC"
+                        label={t("common.fields.swift_bic")}
                         name={[name, "swift_bic"]}
                       >
                         <Input />
                       </Form.Item>
                       <Form.Item
                         {...restField}
-                        label="Код Банка"
+                        label={t("common.fields.bank_code")}
                         name={[name, "bank_code"]}
                       >
                         <Input />
@@ -91,14 +91,14 @@ export const ClientCreate: React.FC = () => {
                   </div>
                 ))}
                 <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                  Добавить банковский счет
+                  {t("common.buttons.add_bank_account")}
                 </Button>
               </>
             )}
           </Form.List>
         </Card>
 
-        <Card title="Контактные данные" size="small">
+        <Card title={t("clients.fields.contacts")} size="small">
           <Form.List name="contacts">
             {(fields, { add, remove }) => (
               <>
@@ -110,35 +110,35 @@ export const ClientCreate: React.FC = () => {
                     <Space wrap align="baseline">
                       <Form.Item
                         {...restField}
-                        label="Должность"
+                        label={t("common.fields.position")}
                         name={[name, "position"]}
                       >
                         <Input />
                       </Form.Item>
                       <Form.Item
                         {...restField}
-                        label="Имя"
+                        label={t("common.fields.first_name")}
                         name={[name, "first_name"]}
                       >
                         <Input />
                       </Form.Item>
                       <Form.Item
                         {...restField}
-                        label="Фамилия"
+                        label={t("common.fields.last_name")}
                         name={[name, "last_name"]}
                       >
                         <Input />
                       </Form.Item>
                       <Form.Item
                         {...restField}
-                        label="Телефон"
+                        label={t("common.fields.phone")}
                         name={[name, "phone"]}
                       >
                         <Input />
                       </Form.Item>
                       <Form.Item
                         {...restField}
-                        label="Email"
+                        label={t("common.fields.email")}
                         name={[name, "email"]}
                         rules={[{ type: 'email' }]}
                       >
@@ -148,7 +148,7 @@ export const ClientCreate: React.FC = () => {
                   </div>
                 ))}
                 <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                  Добавить контактное лицо
+                  {t("common.buttons.add_contact")}
                 </Button>
               </>
             )}

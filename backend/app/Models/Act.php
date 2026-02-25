@@ -11,6 +11,7 @@ class Act extends Model
 
     protected $fillable = [
         'client_id',
+        'my_company_id',
         'invoice_id',
         'number',
         'date',
@@ -26,6 +27,11 @@ class Act extends Model
     public function client()
     {
         return $this->belongsTo(Client::class);
+    }
+
+    public function myCompany()
+    {
+        return $this->belongsTo(MyCompany::class);
     }
 
     public function invoice()

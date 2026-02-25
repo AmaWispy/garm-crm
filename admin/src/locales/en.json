@@ -6,7 +6,8 @@
   "notifications": {
     "editSuccess": "Saved successfully",
     "createSuccess": "Created successfully",
-    "deleteSuccess": "Deleted successfully"
+    "deleteSuccess": "Deleted successfully",
+    "required": "This field is required"
   },
   "users": {
     "users": "Users",
@@ -23,6 +24,108 @@
     },
     "password_mismatch": "Passwords do not match",
     "password_leave_blank": "Leave blank to keep current password"
+  },
+  "clients": {
+    "clients": "Clients",
+    "fields": {
+      "name": "Company Name",
+      "idno": "IDNO (13 digits)",
+      "vat_code": "VAT Code",
+      "director_name": "Administrator",
+      "country": "Country",
+      "legal_address": "Legal Address",
+      "physical_address": "Physical Address",
+      "notes": "Notes",
+      "basic_info": "Basic Information",
+      "bank_accounts": "Bank Accounts",
+      "contacts": "Contact Persons"
+    }
+  },
+  "myCompanies": {
+    "myCompanies": "My Companies",
+    "title": {
+      "list": "My Companies",
+      "create": "Add My Company",
+      "edit": "Edit My Company"
+    }
+  },
+  "invoices": {
+    "invoices": "Invoices",
+    "fields": {
+      "number": "Invoice Number",
+      "date": "Date",
+      "due_date": "Due Date",
+      "type": "Type",
+      "status": "Status",
+      "currency": "Currency",
+      "total_amount": "Total Amount",
+      "paid_amount": "Paid Amount",
+      "balance": "Balance",
+      "notes": "Notes",
+      "emitter": "Emitter Company",
+      "client": "Client",
+      "items": "Items / Services"
+    },
+    "labels": {
+      "sender": "SENDER",
+      "receiver": "RECEIVER",
+      "description": "Description",
+      "amount": "Amount",
+      "quantity": "Qty",
+      "unit": "Unit",
+      "price": "Price",
+      "total": "Total",
+      "paid": "Paid",
+      "balance": "Balance",
+      "signature_sender": "Signature (Sender)",
+      "signature_receiver": "Signature (Receiver)",
+      "note": "Note"
+    }
+  },
+  "acts": {
+    "acts": "Acts",
+    "labels": {
+      "act_number": "Act of work performed №",
+      "to_invoice": "To invoice №",
+      "executor": "EXECUTOR",
+      "customer": "CUSTOMER",
+      "description_works": "Description of works",
+      "amount": "Amount",
+      "total_to_pay": "Total to pay",
+      "statement_placeholder": "Performance of work according to the contract",
+      "statement": "The above services were rendered in full and on time. The customer has no claims regarding the volume, quality and timing of the services provided.",
+      "executor_sign": "Executor",
+      "customer_sign": "Customer"
+    }
+  },
+  "common": {
+    "fields": {
+      "bank_name": "Bank Name",
+      "iban": "IBAN",
+      "swift_bic": "SWIFT/BIC",
+      "bank_code": "Bank Code",
+      "position": "Position",
+      "first_name": "First Name",
+      "last_name": "Last Name",
+      "full_name": "Full Name",
+      "phone": "Phone",
+      "email": "Email"
+    },
+    "buttons": {
+      "add": "Add",
+      "edit": "Edit",
+      "show": "Show",
+      "delete": "Delete",
+      "save": "Save",
+      "cancel": "Cancel",
+      "print": "Print",
+      "add_bank_account": "Add Bank Account",
+      "add_contact": "Add Contact Person"
+    },
+    "countries": {
+      "Moldova": "Moldova",
+      "Other": "Other"
+    }
   },
   "buttons": {
     "actions": "Actions"

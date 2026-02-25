@@ -71,16 +71,38 @@ body {
 
 /* Professional Invoice Styling */
 .invoice-box {
-    max-width: 800px;
-    margin: auto;
-    padding: 30px;
-    border: 1px solid #eee;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    max-width: 850px;
+    margin: 20px auto;
+    padding: 40px;
     font-size: 14px;
     line-height: 24px;
     font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-    color: #555;
+    color: #444;
     background: #fff;
+}
+
+/* Скрываем стандартные бордеры и тени Refine/Antd на страницах просмотра, 
+   чтобы документ выглядел как отдельный лист */
+.refine-show-page .ant-card {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.refine-show-page .ant-card-body {
+    padding: 0 !important;
+}
+
+.refine-show-page .ant-page-header {
+    background: transparent !important;
+    padding: 16px 0 !important;
+}
+
+/* Добавляем фон для всей страницы просмотра, чтобы белый лист выделялся */
+.refine-show-page {
+    background-color: #f0f2f5;
+    min-height: 100vh;
+    padding: 24px;
 }
 
 .invoice-box table {

@@ -1,10 +1,12 @@
 import React from "react";
 import { Create, Edit, useForm, useSelect } from "@refinedev/antd";
-import { Form, Input, Select, DatePicker, InputNumber, Button, Space } from "antd";
+import { Form, Input, Select, DatePicker, InputNumber, Button, Space, Card } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
 
 export const InvoiceCreate: React.FC = () => {
+  const { t } = useTranslation();
   const { formProps, saveButtonProps, queryResult, action } = useForm({
     meta: {
       populate: ["client", "myCompany", "items"],
@@ -43,7 +45,7 @@ export const InvoiceCreate: React.FC = () => {
     >
       <Space size="large" style={{ display: "flex" }}>
         <Form.Item
-          label="Компания-эмитент"
+          label={t("invoices.fields.emitter")}
           name="my_company_id"
           rules={[{ required: true }]}
           style={{ minWidth: 200 }}
@@ -51,7 +53,7 @@ export const InvoiceCreate: React.FC = () => {
           <Select {...myCompanySelectProps} />
         </Form.Item>
         <Form.Item
-          label="Клиент"
+          label={t("invoices.fields.client")}
           name="client_id"
           rules={[{ required: true }]}
           style={{ minWidth: 200 }}
@@ -60,11 +62,11 @@ export const InvoiceCreate: React.FC = () => {
         </Form.Item>
       </Space>
       <Space>
-        <Form.Item label="Number" name="number" rules={[{ required: true }]}>
+        <Form.Item label={t("invoices.fields.number")} name="number" rules={[{ required: true }]}>
           <Input />
         </Form.Item>
         <Form.Item 
-          label="Date" 
+          label={t("invoices.fields.date")} 
           name="date" 
           rules={[{ required: true }]}
           getValueProps={(value) => ({
@@ -74,7 +76,7 @@ export const InvoiceCreate: React.FC = () => {
           <DatePicker format="YYYY-MM-DD" />
         </Form.Item>
         <Form.Item 
-          label="Due Date" 
+          label={t("invoices.fields.due_date")} 
           name="due_date"
           getValueProps={(value) => ({
             value: value ? dayjs(value) : undefined,
@@ -84,7 +86,7 @@ export const InvoiceCreate: React.FC = () => {
         </Form.Item>
       </Space>
       <Space>
-        <Form.Item label="Type" name="type" initialValue="one-time">
+        <Form.Item label={t("invoices.fields.type")} name="type" initialValue="one-time">
           <Select
             options={[
               { label: "One-time", value: "one-time" },
@@ -92,7 +94,7 @@ export const InvoiceCreate: React.FC = () => {
             ]}
           />
         </Form.Item>
-        <Form.Item label="Status" name="status" initialValue="unpaid">
+        <Form.Item label={t("invoices.fields.status")} name="status" initialValue="unpaid">
           <Select
             options={[
               { label: "Unpaid", value: "unpaid" },
@@ -103,58 +105,60 @@ export const InvoiceCreate: React.FC = () => {
         </Form.Item>
       </Space>
 
-      <Form.List name="items">
-        {(fields, { add, remove }) => (
-          <>
-            {fields.map(({ key, name, ...restField }) => (
-              <Space key={key} style={{ display: "flex", marginBottom: 8 }} align="baseline">
-                <Form.Item
-                  {...restField}
-                  name={[name, "description"]}
-                  rules={[{ required: true, message: "Missing description" }]}
-                >
-                  <Input placeholder="Description" />
-                </Form.Item>
-                <Form.Item
-                  {...restField}
-                  name={[name, "quantity"]}
-                  rules={[{ required: true, message: "Missing quantity" }]}
-                >
-                  <InputNumber placeholder="Qty" />
-                </Form.Item>
-                <Form.Item
-                  {...restField}
-                  name={[name, "unit"]}
-                >
-                  <Input placeholder="Unit" />
-                </Form.Item>
-                <Form.Item
-                  {...restField}
-                  name={[name, "price"]}
-                  rules={[{ required: true, message: "Missing price" }]}
-                >
-                  <InputNumber placeholder="Price" />
-                </Form.Item>
-                <MinusCircleOutlined onClick={() => remove(name)} />
-              </Space>
-            ))}
-            <Form.Item>
-              <Button type="dashed" onClick={() => add({ unit: "pcs" })} block icon={<PlusOutlined />}>
-                Add Item
-              </Button>
-            </Form.Item>
-          </>
-        )}
-      </Form.List>
+      <Card title={t("invoices.fields.items")} size="small" style={{ marginBottom: 16 }}>
+        <Form.List name="items">
+          {(fields, { add, remove }) => (
+            <>
+              {fields.map(({ key, name, ...restField }) => (
+                <Space key={key} style={{ display: "flex", marginBottom: 8 }} align="baseline">
+                  <Form.Item
+                    {...restField}
+                    name={[name, "description"]}
+                    rules={[{ required: true, message: t("notifications.required") }]}
+                  >
+                    <Input placeholder={t("invoices.labels.description")} />
+                  </Form.Item>
+                  <Form.Item
+                    {...restField}
+                    name={[name, "quantity"]}
+                    rules={[{ required: true, message: t("notifications.required") }]}
+                  >
+                    <InputNumber placeholder={t("invoices.labels.quantity")} />
+                  </Form.Item>
+                  <Form.Item
+                    {...restField}
+                    name={[name, "unit"]}
+                  >
+                    <Input placeholder={t("invoices.labels.unit")} />
+                  </Form.Item>
+                  <Form.Item
+                    {...restField}
+                    name={[name, "price"]}
+                    rules={[{ required: true, message: t("notifications.required") }]}
+                  >
+                    <InputNumber placeholder={t("invoices.labels.price")} />
+                  </Form.Item>
+                  <MinusCircleOutlined onClick={() => remove(name)} />
+                </Space>
+              ))}
+              <Form.Item>
+                <Button type="dashed" onClick={() => add({ unit: "pcs" })} block icon={<PlusOutlined />}>
+                  {t("common.buttons.add")}
+                </Button>
+              </Form.Item>
+            </>
+          )}
+        </Form.List>
+      </Card>
 
       <Space>
-        <Form.Item label="Total Amount" name="total_amount" rules={[{ required: true }]}>
+        <Form.Item label={t("invoices.fields.total_amount")} name="total_amount" rules={[{ required: true }]}>
           <InputNumber />
         </Form.Item>
-        <Form.Item label="Paid Amount" name="paid_amount" initialValue={0}>
+        <Form.Item label={t("invoices.fields.paid_amount")} name="paid_amount" initialValue={0}>
           <InputNumber />
         </Form.Item>
-        <Form.Item label="Currency" name="currency" initialValue="MDL">
+        <Form.Item label={t("invoices.fields.currency")} name="currency" initialValue="MDL">
           <Select
             options={[
               { label: "MDL", value: "MDL" },
@@ -165,7 +169,7 @@ export const InvoiceCreate: React.FC = () => {
         </Form.Item>
       </Space>
 
-      <Form.Item label="Notes" name="notes">
+      <Form.Item label={t("invoices.fields.notes")} name="notes">
         <Input.TextArea />
       </Form.Item>
     </Form>

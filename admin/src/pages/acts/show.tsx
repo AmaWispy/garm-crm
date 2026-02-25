@@ -1,15 +1,17 @@
 import React from "react";
 import { Show, DateField } from "@refinedev/antd";
-import { Typography, Space, Button, Divider } from "antd";
+import { Typography, Space, Button } from "antd";
 import { useShow } from "@refinedev/core";
+import { useTranslation } from "react-i18next";
 import { PrinterOutlined } from "@ant-design/icons";
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 export const ActShow: React.FC = () => {
+  const { t } = useTranslation();
   const { queryResult } = useShow({
     meta: {
-      populate: ["client", "invoice"],
+      populate: ["client", "invoice", "myCompany"],
     },
   });
   const { data, isLoading } = queryResult;
@@ -34,7 +36,7 @@ export const ActShow: React.FC = () => {
             onClick={handlePrint}
             type="primary"
           >
-            Печать
+            {t("common.buttons.print")}
           </Button>
         </>
       )}
@@ -50,13 +52,13 @@ export const ActShow: React.FC = () => {
                       <div className="invoice-header-title">ACT</div>
                     </td>
                     <td>
-                      <div className="invoice-label">Акт выполненных работ № {record?.number}</div>
+                      <div className="invoice-label">{t("acts.labels.act_number")} {record?.number}</div>
                       <Text type="secondary">
                         <DateField value={record?.date} format="DD.MM.YYYY" />
                       </Text>
                       {record?.invoice && (
                         <div style={{ marginTop: '8px' }}>
-                          <Text type="secondary">К счету № {record.invoice.number}</Text>
+                          <Text type="secondary">{t("acts.labels.to_invoice")} {record.invoice.number}</Text>
                         </div>
                       )}
                     </td>
@@ -70,12 +72,17 @@ export const ActShow: React.FC = () => {
                 <table>
                   <tr>
                     <td>
-                      <div className="invoice-label">ИСПОЛНИТЕЛЬ:</div>
-                      <strong>GARM CRM</strong><br />
-                      {/* Here we could pull sender info if we had it in the Act model */}
+                      <div className="invoice-label">{t("acts.labels.executor")}:</div>
+                      <strong>{record?.my_company?.name || "GARM CRM"}</strong><br />
+                      {record?.my_company && (
+                        <>
+                          IDNO: {record.my_company.idno}<br />
+                          {record.my_company.legal_address}
+                        </>
+                      )}
                     </td>
                     <td>
-                      <div className="invoice-label">ЗАКАЗЧИК:</div>
+                      <div className="invoice-label">{t("acts.labels.customer")}:</div>
                       <strong>{record?.client?.name}</strong><br />
                       IDNO: {record?.client?.idno}<br />
                       {record?.client?.legal_address}
@@ -86,13 +93,13 @@ export const ActShow: React.FC = () => {
             </tr>
 
             <tr className="heading">
-              <td>Описание работ</td>
-              <td>Сумма</td>
+              <td>{t("acts.labels.description_works")}</td>
+              <td>{t("acts.labels.amount")}</td>
             </tr>
 
             <tr className="item last">
               <td>
-                {record?.details || "Выполнение работ согласно договору"}
+                {record?.details || t("acts.labels.statement_placeholder")}
               </td>
               <td>{record?.amount} MDL</td>
             </tr>
@@ -100,21 +107,21 @@ export const ActShow: React.FC = () => {
             <tr className="total">
               <td></td>
               <td>
-                Итого к оплате: {record?.amount} MDL
+                {t("acts.labels.total_to_pay")}: {record?.amount} MDL
               </td>
             </tr>
           </table>
 
           <div style={{ marginTop: '40px', fontSize: '12px', color: '#777' }}>
-            <p>Вышеуказанные услуги были оказаны в полном объеме и в срок. Заказчик претензий по объему, качеству и срокам оказания услуг не имеет.</p>
+            <p>{t("acts.labels.statement")}</p>
           </div>
 
           <div style={{ marginTop: '80px', display: 'flex', justifyContent: 'space-between' }}>
             <div style={{ borderTop: '1px solid #333', width: '200px', textAlign: 'center', paddingTop: '5px' }}>
-              Исполнитель
+              {t("acts.labels.executor_sign")}
             </div>
             <div style={{ borderTop: '1px solid #333', width: '200px', textAlign: 'center', paddingTop: '5px' }}>
-              Заказчик
+              {t("acts.labels.customer_sign")}
             </div>
           </div>
         </div>

@@ -8,25 +8,31 @@ import {
   DateField,
 } from "@refinedev/antd";
 import { Table, Space } from "antd";
+import { useTranslation } from "react-i18next";
 
 export const ActList: React.FC = () => {
+  const { t } = useTranslation();
   const { tableProps } = useTable({
     syncWithLocation: true,
+    meta: {
+      populate: ["client", "myCompany"],
+    },
   });
 
   return (
-    <List>
+    <List title={t("acts.acts")}>
       <Table {...tableProps} rowKey="id">
-        <Table.Column dataIndex="number" title="Number" />
-        <Table.Column dataIndex={["client", "name"]} title="Client" />
+        <Table.Column dataIndex="number" title={t("invoices.fields.number")} />
+        <Table.Column dataIndex={["my_company", "name"]} title={t("invoices.fields.emitter")} />
+        <Table.Column dataIndex={["client", "name"]} title={t("invoices.fields.client")} />
         <Table.Column
           dataIndex="date"
-          title="Date"
+          title={t("invoices.fields.date")}
           render={(value) => value ? <DateField value={value} format="DD.MM.YYYY" /> : "-"}
         />
-        <Table.Column dataIndex="amount" title="Amount" />
+        <Table.Column dataIndex="amount" title={t("invoices.labels.amount")} />
         <Table.Column
-          title="Actions"
+          title={t("buttons.actions")}
           dataIndex="actions"
           render={(_, record: any) => (
             <Space>
